@@ -1,0 +1,120 @@
+
+mysql> desc depart;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| deptno   | int         | NO   | PRI | NULL    |       |
+| dname    | varchar(40) | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.07 sec)
+
+mysql> desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| empno    | int           | NO   | PRI | NULL    |       |
+| enmae    | varchar(30)   | YES  |     | NULL    |       |
+| job      | varchar(20)   | YES  |     | NULL    |       |
+| mgr      | int           | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| comm     | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int           | YES  | MUL | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| empno | enmae  | job       | mgr  | hiredate   | sal     | comm    | deptno |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7000 | jhon   | manager   | 7698 | 2020-06-18 | 2500.00 |    NULL |     50 |
+|  7002 | shan   | manager   | 7698 | 2020-06-18 | 2500.00 |    NULL |     50 |
+|  7004 | ravi   | clerk     | 7782 | 2000-12-12 |  500.00 |    NULL |     50 |
+|  7369 | smith  | clerk     | 7902 | 1993-06-13 |  800.00 |    0.00 |     20 |
+|  7499 | allen  | salesman  | 7698 | 1998-08-15 | 1600.00 |  300.00 |     30 |
+|  7521 | ward   | salesman  | 7698 | 1996-03-26 | 1250.00 |  500.00 |     30 |
+|  7566 | jones  | manager   | 7839 | 1995-10-31 | 2975.00 |    NULL |     20 |
+|  7654 | martin | salesman  | 7698 | 1998-12-05 | 1250.00 | 1400.00 |     30 |
+|  7698 | blake  | manager   | 7839 | 1992-06-11 | 2850.00 |    NULL |     30 |
+|  7782 | clark  | manager   | 7839 | 1993-05-14 | 2450.00 |    NULL |     10 |
+|  7788 | scott  | analyist  | 7566 | 1996-03-05 | 3000.00 |    NULL |     20 |
+|  7839 | king   | president | NULL | 1990-06-09 | 5000.00 |    0.00 |     10 |
+|  7844 | turner | salesman  | 7698 | 1995-06-04 | 1500.00 |    0.00 |     30 |
+|  7876 | adams  | clerk     | 7788 | 1999-06-04 | 1100.00 |    NULL |     20 |
+|  7900 | james  | clerk     | 7698 | 2000-06-23 |  950.00 |    NULL |     30 |
+|  7902 | ford   | analyst   | 7566 | 1997-12-05 | 3000.00 |    NULL |     20 |
+|  7934 | miller | clerk     | 7782 | 2000-01-21 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+17 rows in set (0.00 sec)
+
+mysql> select * from depart;
++--------+------------+-----------+
+| deptno | dname      | location  |
++--------+------------+-----------+
+|     10 | accounting | new york  |
+|     20 | reasearch  | dellas    |
+|     30 | sales      | chikago   |
+|     40 | operations | boston    |
+|     50 | production | india     |
+|     60 | marketing  | bangalore |
+|     70 | finance    | mumbai    |
++--------+------------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from emp
+    -> where deptno in (select deptno from depart where location like '%o%');
++-------+--------+-----------+------+------------+---------+---------+--------+
+| empno | enmae  | job       | mgr  | hiredate   | sal     | comm    | deptno |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7782 | clark  | manager   | 7839 | 1993-05-14 | 2450.00 |    NULL |     10 |
+|  7839 | king   | president | NULL | 1990-06-09 | 5000.00 |    0.00 |     10 |
+|  7934 | miller | clerk     | 7782 | 2000-01-21 | 1300.00 |    NULL |     10 |
+|  7499 | allen  | salesman  | 7698 | 1998-08-15 | 1600.00 |  300.00 |     30 |
+|  7521 | ward   | salesman  | 7698 | 1996-03-26 | 1250.00 |  500.00 |     30 |
+|  7654 | martin | salesman  | 7698 | 1998-12-05 | 1250.00 | 1400.00 |     30 |
+|  7698 | blake  | manager   | 7839 | 1992-06-11 | 2850.00 |    NULL |     30 |
+|  7844 | turner | salesman  | 7698 | 1995-06-04 | 1500.00 |    0.00 |     30 |
+|  7900 | james  | clerk     | 7698 | 2000-06-23 |  950.00 |    NULL |     30 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+9 rows in set (0.00 sec)
+
+
+mysql> SELECT Sal FROM Emp ORDER BY Sal DESC LIMIT 1 OFFSET 3;
++---------+
+| Sal     |
++---------+
+| 2975.00 |
++---------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT Sal FROM Emp ORDER BY Sal DESC LIMIT 1 OFFSET 1;
++---------+
+| Sal     |
++---------+
+| 3000.00 |
++---------+
+1 row in set (0.00 sec)
+
+
+
+3.list the dept name that are having atleast 4 employes init
+4.display the dept name which are having atleast 2 clerks init.
+5.display the second max salary.
+6.sisplay the 3rd max sal.
+
+2.list the dept name that are having atleast one emp init.
+mysql> select * from depart
+    -> where deptno in (select deptno from emp)
+    -> group by deptno
+    -> having count(deptno)>0;
++--------+------------+----------+
+| deptno | dname      | location |
++--------+------------+----------+
+|     10 | accounting | new york |
+|     20 | reasearch  | dellas   |
+|     30 | sales      | chikago  |
+|     50 | production | india    |
++--------+------------+----------+
+4 rows in set (0.00 sec)
